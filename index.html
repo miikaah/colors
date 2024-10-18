@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HSL Color Wheel</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="colorWheel" width="500" height="500"></canvas>
+
+    <script>
+      const canvas = document.getElementById("colorWheel");
+      const ctx = canvas.getContext("2d");
+      const radius = canvas.width / 2;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+
+      function drawColorWheel() {
+        for (let hue = 0; hue <= 360; hue++) {
+          const adjustedHue = (hue - 90 + 360) % 360; // Keep it within 0-360 degrees
+          const angle = adjustedHue * (Math.PI / 180); // Convert degrees to radians
+
+          // Calculate x, y positions for each hue based on angle
+          const x = centerX + radius * Math.cos(angle);
+          const y = centerY + radius * Math.sin(angle);
+
+          // Set the saturation and lightness to a constant (e.g., S = 100%, L = 50%)
+          const color = `hsl(${hue}, 100%, 50%)`;
+
+          // Draw a small line representing the color at that position
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        }
+      }
+
+      drawColorWheel();
+    </script>
+  </body>
+</html>
